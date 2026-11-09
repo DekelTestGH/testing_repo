@@ -1,0 +1,16 @@
+name: Stack event dump
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump the pull_request event
+        run: |
+          jq '{action, before, after, number,
+               base: .pull_request.base.ref,
+               head_sha: .pull_request.head.sha,
+               default_branch: .repository.default_branch,
+               stack: .pull_request.stack,
+               changes}' "$GITHUB_EVENT_PATH"
