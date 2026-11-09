@@ -1,7 +1,7 @@
 name: Stack event dump
 on:
   pull_request:
-    types: [opened, reopened, synchronize, edited]
+    types: [opened, reopened, synchronize, edited, closed, stacked]
 jobs:
   dump:
     runs-on: ubuntu-latest
@@ -13,4 +13,5 @@ jobs:
                head_sha: .pull_request.head.sha,
                default_branch: .repository.default_branch,
                stack: .pull_request.stack,
+               merged: .pull_request.merged, merge_commit_sha: .pull_request.merge_commit_sha,
                changes}' "$GITHUB_EVENT_PATH"
